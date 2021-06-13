@@ -1,0 +1,13 @@
+{
+    "name": "conditional-token",
+    "title": "Conditional tokens",
+    "description": "configure multiple token-images for different occasions",
+    "version": "0.0.1",
+    "author": "Magnus Seibert",
+    "scripts": ["./main.js"],
+    "url": "",
+    "manifest": "",
+    "download": "",
+    "minimumCoreversion": "0.7.10",
+    "compatiableCoreVersion": "0.7.10"
+}
