@@ -7,7 +7,7 @@
     "scripts": ["./main.js"],
     "url": "https://github.com/StefanMasz/conditional-tokens",
     "manifest": "https://raw.githubusercontent.com/StefanMasz/conditional-tokens/main/module.json",
-    "download": "",
+    "download": "https://github.com/StefanMasz/conditional-tokens/archive/main.zip",
     "minimumCoreversion": "0.7.10",
     "compatiableCoreVersion": "0.7.10"
 }
