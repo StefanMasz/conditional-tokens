@@ -15,11 +15,11 @@ class TokenModificator {
             if (toggledItem.data.equipped === true) {
                 this.updateVariantToken(img, toggledItem.name, actor);
             } else if (toggledItem.data.equipped === false) {
-                if (this.isVariant(this.getCharacterName(img))){
+                if (img.includes(toggledItem.name)){
                     newTokenPath = this.getDefaultToken(img);
                     this.setTokenImage(newTokenPath, actor);
                 } else {
-                    console.log("Con Token | Ignoring this because it's not a variant");
+                    console.log("Con Token | Ignoring this because it's not the active variant");
                 }
             }
         });
