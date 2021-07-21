@@ -6,18 +6,42 @@ class TokenModificator {
     }
 
     static hooksOnUpdateActor() {
-        Hooks.on("updateOwnedItem", (actor, toggledItem) => {
+
+        Hooks.on('updateActor', function (actor, changes) {
+            if (changes.data?.status?.mount?.mounted !== undefined){
+                console.log('Con Token | updateActor mount');
+                var img = actor.data.token.img;
+                var token = TokenModificator.getTokenForActor(actor);
+                if (img === undefined || img === "")
+                    return;
+                if (changes.data?.status?.mount?.mounted === true){
+                    TokenModificator.updateVariantToken(img, "Mount", actor);
+                    token.update({'scale': 2});
+                    actor.update({"token.scale": 2});
+                    console.log('Con Token | updated to mounted');
+                } else if (changes.data?.status?.mount?.mounted === false) {
+                    var newTokenPath = TokenModificator.getDefaultToken(img);
+                    TokenModificator.setTokenImage(newTokenPath, actor);
+                    token.update({'scale': 1});
+                    actor.update({"token.scale": 1});
+                    console.log('Con Token | updated to unmounted');
+                }
+            }
+        });
+
+        Hooks.on("updateItem", (item) => {
+            console.log("Con Token | updateItem");
+            var actor = item.parent;
             var img = actor.data.token.img;
             if (img === undefined || img === "")
                 return;
-
-            var newTokenPath;
-            if (toggledItem.data.equipped === true) {
-                this.updateVariantToken(img, toggledItem.name, actor);
-            } else if (toggledItem.data.equipped === false) {
-                if (img.includes(toggledItem.name)){
-                    newTokenPath = this.getDefaultToken(img);
-                    this.setTokenImage(newTokenPath, actor);
+            
+            if (item.data.data.equipped === true || item.data.worn?.value === true) {
+                TokenModificator.updateVariantToken(img, item.name, actor);
+            } else if (item.data.data.equipped === false || item.data.data.worn?.value === false) {
+                if (img.includes(item.name)){
+                    var newTokenPath = TokenModificator.getDefaultToken(img);
+                    TokenModificator.setTokenImage(newTokenPath, actor);
                 } else {
                     console.log("Con Token | Ignoring this because it's not the active variant");
                 }
@@ -82,12 +106,11 @@ class TokenModificator {
      * @return {boolean}      Does the file exist at the provided url?
      */
     static async srcExists(src) {
-        var result = await fetch(src, {method: 'HEAD'})
+        return await fetch(src, {method: 'HEAD'})
             .then(resp => {
                 return resp.status === 200
             })
             .catch(err => false);
-        return result;
     }
 
     static getCharacterName(tokenPath){
