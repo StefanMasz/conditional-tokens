@@ -36,7 +36,8 @@ class TokenModificator {
             if (img === undefined || img === "")
                 return;
             
-            if (item.data.data.equipped === true || item.data.worn?.value === true) {
+            console.log(item.data.data.worn?.value);
+            if (item.data.data.equipped === true || item.data.data.worn?.value === true) {
                 TokenModificator.updateVariantToken(img, item.name, actor);
             } else if (item.data.data.equipped === false || item.data.data.worn?.value === false) {
                 if (img.includes(item.name)){
