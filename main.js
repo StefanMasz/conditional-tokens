@@ -36,10 +36,11 @@ class TokenModificator {
             if (img === undefined || img === "")
                 return;
             
-            console.log(item.data.data.worn?.value);
-            if (item.data.data.equipped === true || item.data.data.worn?.value === true) {
+            console.log(item.data.data.worn);
+            console.log(item.data.data.equipped);
+            if (item.data.data.equipped === true || item.data.data.worn === true) {
                 TokenModificator.updateVariantToken(img, item.name, actor);
-            } else if (item.data.data.equipped === false || item.data.data.worn?.value === false) {
+            } else if (item.data.data.equipped === false || item.data.data.worn === false) {
                 if (img.includes(item.name)){
                     var newTokenPath = TokenModificator.getDefaultToken(img);
                     TokenModificator.setTokenImage(newTokenPath, actor);
